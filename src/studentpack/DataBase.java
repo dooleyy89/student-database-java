@@ -8,14 +8,14 @@ package studentpack;
 import java.util.*;
 public class DataBase {
 	private DataBaseArray DB;
-	private IndexList first, last, ID;
+	private IndexArray first, last, ID;
 	
 	//constructor
 	public DataBase() {
 		DB = new DataBaseArray(100);
-		first = new IndexList();
-		last = new IndexList();
-		ID = new IndexList();
+		first = new IndexArray(100);
+		last = new IndexArray(100);
+		ID = new IndexArray(100);
 	}
 	
     /**
@@ -45,6 +45,7 @@ public class DataBase {
             last.delete(where);
             first.delete(where); 
             System.out.println("Deleted");
+        
         } else 
             System.out.println("ID not Found");
     }
@@ -63,6 +64,7 @@ public class DataBase {
         if (where != -1) { 
             DB.grab(where); // grab the Database record based on where it is
             System.out.println();
+        
         } else 
                System.out.println("ID not Found"); 
     }
@@ -104,7 +106,7 @@ public class DataBase {
             //these three lines create new indexRecords for the firstname, lastname & ID
             IndexRecord fname = new IndexRecord(f, DB.findID(newRecord.getID()));
             IndexRecord lname = new IndexRecord(l, DB.findID(newRecord.getID()));
-            IndexRecord IDindex = new IndexRecord(id, DB.findID(newRecord.getID()));//fills the WHERE
+            IndexRecord IDindex = new IndexRecord(id, DB.findID(newRecord.getID()));//fills the  where
             
             first.insert(fname);
             last.insert(lname);
@@ -117,14 +119,12 @@ public class DataBase {
     
     /**
      * listForward(IndexArray i): This method takes parameter i, which will be an IndexArray, and prints
-     * list in ascending order.
+     * it in ascending order.
      */
-    public void listForward(IndexList ir) {
-        ir.iteratorInitFront();
-        int firstIndex = ir.getItr().getWhere();
-        DB.grab(firstIndex); // Prints first element
-        while (ir.hasNext()) { // while the array has a next element
-            int next = ir.getNext();
+    public void listForward(IndexArray i) {
+        i.iteratorInitFront();
+        while (i.hasNext()) { // while the array has a next element
+            int next = i.getNext();
             DB.grab(next);// Grab the next element in database based on the indexArray
         }
         System.out.println();
@@ -133,14 +133,12 @@ public class DataBase {
     
     /**
      * listBackward(IndexArray i): Similar to listForward, this method takes parameter i, which will be 
-     * an IndexArray, and prints list in descending order.
+     * an IndexArray, and prints it in descending order.
      */
-    public void listBackward(IndexList ir) {
-        ir.iteratorInitBack();
-        int lastIndex = ir.getItr().getWhere();
-        DB.grab(lastIndex); // Prints first element
-        while (ir.hasPrevious()) { // while the array has a previous element
-            int next = ir.getPrevious(); 
+    public void listBackward(IndexArray i) {
+        i.iteratorInitBack();
+        while (i.hasPrevious()) { // while the array has a previous element
+            int next = i.getPrevious(); 
             DB.grab(next); // Grab the previous element in database based on the indexArray
         }
         System.out.println();
